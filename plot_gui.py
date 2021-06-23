@@ -2,6 +2,7 @@ from tkinter import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
 NavigationToolbar2Tk)
+from math import *
 
 from fun import * #Моя функция
 
@@ -11,21 +12,47 @@ def getXY(text):
     s.pop(-1)
     for i in range(0,len(s)):
         s[i]=s[i].split(',')
-    return s
+        s[i]=[float(elem) for elem in s[i]]
+    t=list()
+    for i in range(0,len(s)):
+        l=list()
+        for k in range(0,len(s)):
+            if k==i:
+                l.append(float('inf'))
+                continue
+            c=sqrt((s[i][0]-s[k][0])**2 + (s[i][1]-s[k][1])**2)
+            l.append(c)
+        t.append(l)
+    return s, t
+
+def risovanie(xy,path):
+    x=list()
+    y=list()
+    for i in xy:
+        plot1.text(i[0], i[1],str(i[0])+','+str(i[1]))
+    for i in path:
+        x.append(xy[i][0])
+        y.append(xy[i][1])
+    #print(x,y)
+    plot1.plot(x,y)
 
 def fun_perebor():
-    x_y=getXY(xy)
-    polnyi_perebor()
-    dlina.delete(0, END); dlina.insert(0, 'test1')
-    time.delete(0, END);  time.insert(0, 'test2')
-    kol.delete(0, END);  kol.insert(0, 'test3')
+    x_y,dist_xy=getXY(xy)
+    for i in dist_xy:
+        print(*i)
+    s,pyth,lenn,times=polnyi_perebor(x_y,dist_xy)
+    dlina.delete(0, END); dlina.insert(0, str(s))
+    time.delete(0, END); time.insert(0, str(times))
+    kol.delete(0, END); kol.insert(0, str(lenn))
+    risovanie(x_y,pyth)
 
 def fun_metod():
-    x_y=getXY(xy)
-    vetvi_i_grany()
-    dlina.delete(0, END); dlina.insert(0, 'test1')
-    time.delete(0, END);  time.insert(0, 'test2')
-    kol.delete(0, END);  kol.insert(0, 'test3')
+    x_y,dist_xy=getXY(xy)
+    s,pyth,lenn,times=vetvi_i_grany(x_y,dist_xy)
+    dlina.delete(0, END); dlina.insert(0, str(s))
+    time.delete(0, END); time.insert(0, str(times))
+    kol.delete(0, END); kol.insert(0, str(lenn))
+    risovanie(x_y,pyth)
 
 def fun_dinam():
     x_y=getXY(xy)
@@ -59,6 +86,9 @@ fig = Figure(figsize = (5, 5),dpi = 70) # фигура, которая буде�
 # список координат
 plot1 = fig.add_subplot(111) #Вспомогательный плот
 #plot1.plot(y) #Рисуем график
+plot1.grid() #Сетка 
+plot1.set_ylim(0, 10)
+plot1.set_xlim(0, 10)
 canvas = FigureCanvasTkAgg(fig,master = frame_plot) #Создаём конву
 canvas.draw()
 canvas.get_tk_widget().pack()
