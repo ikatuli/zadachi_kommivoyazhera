@@ -7,7 +7,6 @@ def rec(a,z,l): #Соствляет варианты перебора
         global_list.append(l)
         return 0
     for i in range(0,z):
-        if not l.count(i):
             c=l.copy()
             c.append(i)
             rec(a-1,z,c)
@@ -17,6 +16,22 @@ def polnyi_perebor(xy,dist_xy):
     global global_list
     global_list=list();
     rec(len(xy),len(xy),[])
+
+    tmp=list()
+
+    for i in range(0,len(global_list)-1):
+        itmp=0;
+        for j in range(len(xy)):
+            print(i,len(global_list))
+            if not global_list[i].count(j):
+                itmp=1;
+        if itmp:
+            tmp.append(global_list[i])
+
+    global_list.clear()
+    for i in range(len(tmp)):global_list.append(tmp[i].copy())
+
+
     s=list()
     for i in global_list:
         suma=0
