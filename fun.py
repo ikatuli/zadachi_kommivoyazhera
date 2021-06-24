@@ -17,7 +17,7 @@ def polnyi_perebor(xy,dist_xy):
     global global_list
     global_list=list();
     rec(len(xy),len(xy),[])
-
+    g=len(global_list)
     tmp=list()
 
     for i in range(0,len(global_list)-1): #Удаляем списки без городов
@@ -45,7 +45,7 @@ def polnyi_perebor(xy,dist_xy):
         if (s[i]<mini) and (s[i]!=float('inf')):
             mini=s[i]
             ii=i
-    return s[ii],global_list[ii],len(global_list),time.perf_counter()-times
+    return s[ii],global_list[ii],g,time.perf_counter()-times
 
 #Функция нахождения минимального элемента, исключая текущий элемент
 def Min(lst,myindex):
@@ -145,7 +145,7 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
     vozvrat.append(0) #print(vozvrat)
 
 
-    return PathLenght,vozvrat,0,time.perf_counter()-times
+    return PathLenght,vozvrat,len(result),time.perf_counter()-times
 
 def dinamicheskoe_programirovanie(xy,distxy):
     times=time.perf_counter();
@@ -160,8 +160,12 @@ def dinamicheskoe_programirovanie(xy,distxy):
         A = B
     res = min([(A[d][0] + distxy[0][d[1]], A[d][1]) for d in iter(A)])
     res[1].append(0)
+
+    g=1;
+    for i in range(1,cnt):
+        g*=i;
     
-    return res[0],res[1],len(S),time.perf_counter()-times
+    return res[0],res[1],g,time.perf_counter()-times
 
 
 def jadnyi_algoritm(xy,distxy):
