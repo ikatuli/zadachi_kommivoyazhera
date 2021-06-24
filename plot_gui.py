@@ -38,8 +38,6 @@ def risovanie(xy,path):
 
 def fun_perebor():
     x_y,dist_xy=getXY(xy)
-    for i in dist_xy:
-        print(*i)
     s,pyth,lenn,times=polnyi_perebor(x_y,dist_xy)
     dlina.delete(0, END); dlina.insert(0, str(s))
     time.delete(0, END); time.insert(0, str(times))
@@ -48,18 +46,19 @@ def fun_perebor():
 
 def fun_metod():
     x_y,dist_xy=getXY(xy)
-    s,pyth,lenn,times=vetvi_i_grany(x_y,dist_xy)
+    s,pyth,lenn,times=dinamicheskoe_programirovanie(x_y,dist_xy)
     dlina.delete(0, END); dlina.insert(0, str(s))
     time.delete(0, END); time.insert(0, str(times))
     kol.delete(0, END); kol.insert(0, str(lenn))
     risovanie(x_y,pyth)
 
 def fun_dinam():
-    x_y=getXY(xy)
-    dinamicheskoe_programirovanie()
-    dlina.delete(0, END); dlina.insert(0, 'test1')
-    time.delete(0, END);  time.insert(0, 'test2')
-    kol.delete(0, END);  kol.insert(0, 'test3')
+    x_y,dist_xy=getXY(xy)
+    s,pyth,lenn,times=dinamicheskoe_programirovanie(x_y,dist_xy)
+    dlina.delete(0, END); dlina.insert(0, str(s))
+    time.delete(0, END); time.insert(0, str(times))
+    kol.delete(0, END); kol.insert(0, str(lenn))
+    risovanie(x_y,pyth)
 
 def fun_jadn():
     x_y=getXY(xy)

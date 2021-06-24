@@ -1,4 +1,5 @@
 import time
+import itertools
 
 def rec(a,z,l): #Соствляет варианты перебора
     if not a:
@@ -109,8 +110,6 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
 
     result=[x-1 for x in result]
     #result.insert(0,0)
-    print(result)
-
     for i in range(0,len(result)-1,2):
         print(dist_xy,result[i])
         if i==len(result)-2:
@@ -135,8 +134,22 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
 
     return PathLenght,vozvrat,0,time.perf_counter()-times
 
-def dinamicheskoe_programirovanie():
-    print("Динамическое программировние")
+def dinamicheskoe_programirovanie(xy,distxy):
+    times=time.perf_counter();
+    A = {(frozenset([0, idx+1]), idx+1): (dist, [0,idx+1]) for idx,dist in enumerate(distxy[0][1:])}
+    #Словарь, где ключём является два индекса ячеки в строке. Значением является растрояние от первой точки до второго индекса.
+    cnt = len(xy)
+    for m in range(2, cnt):
+        B = {}
+        for S in [frozenset(C) | {0} for C in itertools.combinations(range(1, cnt), m)]:
+            for j in S - {0}:
+                B[(S, j)] = min( [(A[(S-{j},k)][0] + distxy[k][j], A[(S-{j},k)][1] + [j]) for k in S if k != 0 and k!=j])
+        A = B
+    res = min([(A[d][0] + distxy[0][d[1]], A[d][1]) for d in iter(A)])
+    res[1].append(0)
+    
+    return res[0],res[1],len(S),time.perf_counter()-times
+
 
 def jadnyi_algoritm():
     print("Жадный алгоритм")
