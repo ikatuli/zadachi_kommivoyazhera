@@ -194,5 +194,3 @@ def jadnyi_algoritm(xy,distxy):
     way.append(way[-1])
 
     return S,way,len(RS),time.perf_counter()-times
-
-#polnyi_perebor([[1, 2], [3, 4], [5, 6], [1, 4]],{'0:1': 2.8284271247461903, '0:2': 5.656854249492381, '0:3': 2.0, '1:2': 2.8284271247461903, '1:3': 2.0, '2:3': 4.47213595499958})
