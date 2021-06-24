@@ -1,5 +1,6 @@
 import time
 import itertools
+from numpy import exp,sqrt,arange
 
 def rec(a,z,l): #Соствляет варианты перебора
     if not a:
@@ -19,13 +20,12 @@ def polnyi_perebor(xy,dist_xy):
 
     tmp=list()
 
-    for i in range(0,len(global_list)-1):
+    for i in range(0,len(global_list)-1): #Удаляем списки без городов
         itmp=0;
         for j in range(len(xy)):
-            print(i,len(global_list))
             if not global_list[i].count(j):
                 itmp=1;
-        if itmp:
+        if not itmp:
             tmp.append(global_list[i])
 
     global_list.clear()
@@ -42,7 +42,7 @@ def polnyi_perebor(xy,dist_xy):
     mini=10000
     ii=0
     for i in range(0,len(s)):
-        if s[i]<mini:
+        if (s[i]<mini) and (s[i]!=float('inf')):
             mini=s[i]
             ii=i
     return s[ii],global_list[ii],len(global_list),time.perf_counter()-times
@@ -61,7 +61,6 @@ def Delete(matrix,index1,index2):
 
 def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
     times=time.perf_counter();
-    print (dist_xy)
     matrix=list()
     for i in range(len(dist_xy)):matrix.append(dist_xy[i].copy())
     H=0
@@ -126,7 +125,6 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
     result=[x-1 for x in result]
     #result.insert(0,0)
     for i in range(0,len(result)-1,2):
-        print(dist_xy,result[i])
         if i==len(result)-2:
             PathLenght+=dist_xy[result[i]][result[i+1]]
             PathLenght+=dist_xy[result[i+1]][result[0]]
@@ -166,7 +164,31 @@ def dinamicheskoe_programirovanie(xy,distxy):
     return res[0],res[1],len(S),time.perf_counter()-times
 
 
-def jadnyi_algoritm():
-    print("Жадный алгоритм")
+def jadnyi_algoritm(xy,distxy):
+    times=time.perf_counter();
+    n=len(xy)
+    RS=[];RW=[];RIB=[]
+    s=[]
+    for ib in arange(0,n,1):
+        way=[]
+        way.append(ib)
+        for i in arange(1,n,1):
+            s=[]
+            for j in arange(0,n,1):
+                s.append(M[way[i-1]][j])
+                for j in arange(0,i,1):
+                    distxy[way[i]][way[j]]=float('inf')
+                    distxy[way[i]][way[j]]=float('inf')
+        S=sum([sqrt((XY[way[i]][0]-XY[way[i+1]][0])**2+(XY[way[i]][1]-XY[way[i+1]][0])**2) for i in arange(0,n-1,1)])+ sqrt((XY[way[n-1]][0]-XY[way[0]][0])**2+(XY[way[n-1]][0]-XY[way[0]][0])**2)
+        RS.append(S)
+        RW.append(way)
+        RIB.append(ib)
+    
+    S=min(RS)
+    way=RW[RS.index(min(RS))]
+    ib=RIB[RS.index(min(RS))]
+    way.append(way[-1])
+
+    return S,way,len(RS),time.perf_counter()-times
 
 #polnyi_perebor([[1, 2], [3, 4], [5, 6], [1, 4]],{'0:1': 2.8284271247461903, '0:2': 5.656854249492381, '0:3': 2.0, '1:2': 2.8284271247461903, '1:3': 2.0, '2:3': 4.47213595499958})

@@ -6,7 +6,7 @@ from math import *
 
 from fun import * #Моя функция
 
-def getXY(text):
+def getXY(text):#Получение кординат из текстового виждета
     s = text.get(1.0, END)
     s=s.split('\n')
     s.pop(-1)
@@ -25,7 +25,7 @@ def getXY(text):
         t.append(l)
     return s, t
 
-def risovanie(xy,path):
+def risovanie(xy,path):#Рисование графика
     x=list()
     y=list()
     for i in xy:
@@ -33,7 +33,6 @@ def risovanie(xy,path):
     for i in path:
         x.append(xy[i][0])
         y.append(xy[i][1])
-    #print(x,y)
     plot1.plot(x,y)
 
 def fun_perebor():
@@ -61,11 +60,12 @@ def fun_dinam():
     risovanie(x_y,pyth)
 
 def fun_jadn():
-    x_y=getXY(xy)
-    jadnyi_algoritm()
-    dlina.delete(0, END); dlina.insert(0, 'test1')
-    time.delete(0, END);  time.insert(0, 'test2')
-    kol.delete(0, END);  kol.insert(0, 'test3')
+    x_y,dist_xy=getXY(xy)
+    s,pyth,lenn,times=dinamicheskoe_programirovanie(x_y,dist_xy)
+    dlina.delete(0, END); dlina.insert(0, str(s))
+    time.delete(0, END); time.insert(0, str(times))
+    kol.delete(0, END); kol.insert(0, str(lenn))
+    risovanie(x_y,pyth)
 
 window = Tk()
 window.title("Определение кратчайшего пути")
