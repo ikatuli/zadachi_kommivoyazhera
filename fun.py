@@ -2,7 +2,7 @@ import time
 import itertools
 from numpy import exp,sqrt,arange
 
-def rec(a,z,l): #Соствляет варианты перебора
+def rec(a,z,l): #Составляет варианты перебора
     if not a:
         l.append(l[0])
         global_list.append(l)
@@ -73,7 +73,7 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
     Stb=Str.copy()
 
     while True:
-        for i in range(len(matrix)): # Редукция по стобцам и колоннам
+        for i in range(len(matrix)): # Редукция по столбцам и колоннам
             min_row = min(matrix[i])
             min_column = min(row[i] for row in matrix)
             H += min_row + min_column
@@ -81,7 +81,7 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
                 matrix[i][j] -= min_row
                 matrix[j][i] -= min_column
 
-        #Оценка клеток и поиск нулевых клеток с максимвльной оценкой
+        #Оценка клеток и поиск нулевых клеток с максимальной оценкой
         NullMax=0
         index1=0
         index2=0
@@ -95,7 +95,7 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
                         index1=i
                         index2=j
 
-        #Находждение необходимого пути. Удаление ненужного.
+        #Нахождение необходимого пути. Удаление ненужного.
 
         res.append(Str[index1]+1)
         res.append(Stb[index2]+1)
@@ -150,7 +150,7 @@ def vetvi_i_grany(xy,dist_xy): #https://github.com/Clever-Shadow/python-salesman
 def dinamicheskoe_programirovanie(xy,distxy):
     times=time.perf_counter();
     A = {(frozenset([0, idx+1]), idx+1): (dist, [0,idx+1]) for idx,dist in enumerate(distxy[0][1:])}
-    #Словарь, где ключём является два индекса ячеки в строке. Значением является растрояние от первой точки до второго индекса.
+    #Словарь, где ключом является два индекса ячейка в строке. Значением является расстояние от первой точки до второго индекса.
     cnt = len(xy)
     for m in range(2, cnt):
         B = {}

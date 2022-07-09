@@ -6,7 +6,7 @@ from math import *
 
 from fun import * #Моя функция
 
-def getXY(text):#Получение кординат из текстового виждета
+def getXY(text):#Получение координат из текстового виджета
     s = text.get(1.0, END)
     s=s.split('\n')
     s.pop(-1)
@@ -88,13 +88,13 @@ plot1 = fig.add_subplot(111) #Вспомогательный плот
 plot1.grid() #Сетка 
 plot1.set_ylim(0, 10)
 plot1.set_xlim(0, 10)
-canvas = FigureCanvasTkAgg(fig,master = frame_plot) #Создаём конву
+canvas = FigureCanvasTkAgg(fig,master = frame_plot) #Создаём канву
 canvas.draw()
 canvas.get_tk_widget().pack()
 toolbar = NavigationToolbar2Tk(canvas,frame_plot)
 color = "#fff"
 for button in toolbar.winfo_children():
-    if str(button)!='.!frame.!frame.!navigationtoolbar2tk.!label2':#Закршивать всё кроме координат #Убрать костыль.
+    if str(button)!='.!frame.!frame.!navigationtoolbar2tk.!label2':#Закрашивать всё кроме координат
         button.config(background=color)
 toolbar.update()
 canvas.get_tk_widget().pack()
@@ -115,7 +115,7 @@ But_perebor.pack(fill=BOTH)
 But_metod = Button(master=frame_knopka ,command=fun_metod, text="Метод ветвей и границ")
 But_metod.pack(fill=BOTH)
 
-But_dinam = Button(master=frame_knopka ,command=fun_dinam, text="Динамическое программировние")
+But_dinam = Button(master=frame_knopka ,command=fun_dinam, text="Динамическое программирование")
 But_dinam.pack(fill=BOTH)
 
 But_jadn = Button(master=frame_knopka ,command=fun_jadn, text="Жадный алгоритм")
@@ -127,7 +127,7 @@ frame_rezultat.pack(side=RIGHT)
 dlina = Entry(master=frame_rezultat);dlina_lbl = Label(master=frame_rezultat, text="Длинна пути")  
 dlina.grid(row=0, column=0);dlina_lbl.grid(row=0, column=1)
 
-time = Entry(master=frame_rezultat);time_lbl = Label(master=frame_rezultat, text="Время рассчёта")  
+time = Entry(master=frame_rezultat);time_lbl = Label(master=frame_rezultat, text="Время расчёта")  
 time.grid(row=1, column=0);time_lbl.grid(row=1, column=1)
 
 kol = Entry(master=frame_rezultat);kol_lbl = Label(master=frame_rezultat, text="Количество вариантов")
